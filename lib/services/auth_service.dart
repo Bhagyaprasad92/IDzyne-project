@@ -1,3 +1,5 @@
+// Removed few important lines in code for not giving complete implementation
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
@@ -20,28 +22,28 @@ class AuthService {
   }
 
   // Check if user is logged in
-  static Future<bool> isLoggedIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_isLoggedInKey) ?? false;
-  }
+  // static Future<bool> isLoggedIn() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.getBool(_isLoggedInKey) ?? false;
+  // }
 
-  // Get stored user ID
-  static Future<String?> getUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_userIdKey);
-  }
+  // // Get stored user ID
+  // static Future<String?> getUserId() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.getString(_userIdKey);
+  // }
 
-  // Get stored user name
-  static Future<String?> getUserName() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_userNameKey);
-  }
+  // // Get stored user name
+  // static Future<String?> getUserName() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.getString(_userNameKey);
+  // }
 
   // Get stored user email
-  static Future<String?> getUserEmail() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_userEmailKey);
-  }
+  // static Future<String?> getUserEmail() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.getString(_userEmailKey);
+  // }
 
   // Clear all user data (logout)
   static Future<void> logout() async {

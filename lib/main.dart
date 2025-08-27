@@ -1,17 +1,10 @@
+// Removed few important lines in code for not giving complete implementation
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:ai_barcode_scanner/ai_barcode_scanner.dart';
-import 'package:http/http.dart' as http;
-import 'package:idzyne/AttendanceOverviewScreen.dart';
 import 'package:idzyne/home_screen.dart';
-import 'package:idzyne/statistics.dart';
-import 'package:idzyne/studentID.dart';
-import 'package:idzyne/widgets/bug_report_dialog.dart';
-import 'dart:convert';
-import 'services/student_data.dart';
-import 'login_signup_screen.dart';
+import 'package:idzyne/login_signup_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:idzyne/widgets/custom_bottom_navbar.dart';
 

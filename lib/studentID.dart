@@ -1,3 +1,5 @@
+// Removed few important lines in code for not giving complete implementation
+
 import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,22 +8,23 @@ import 'dart:convert';
 import 'package:vibration/vibration.dart';
 
 class IDCardPage extends StatefulWidget {
-  final String userId;
-  final String studentName;
-  final String rollNo;
-  final String imageUrl;
-  final String tech;
-  final String addedBy;
+  // remove late and uncomment the below lines
+  late final String userId;
+  late final String studentName;
+  late final String rollNo;
+  late final String imageUrl;
+  late final String tech;
+  late final String addedBy;
 
-  const IDCardPage({
-    super.key,
-    required this.userId,
-    required this.studentName,
-    required this.rollNo,
-    required this.imageUrl,
-    required this.tech,
-    required this.addedBy,
-  });
+  // const IDCardPage({
+  //   super.key,
+  //   required this.userId,
+  //   required this.studentName,
+  //   required this.rollNo,
+  //   required this.imageUrl,
+  //   required this.tech,
+  //   required this.addedBy,
+  // });
 
   @override
   State<IDCardPage> createState() => _IDCardPageState();
@@ -162,128 +165,123 @@ class _IDCardPageState extends State<IDCardPage> {
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.6),
       body: Center(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: width * 0.75,
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
+        child: Row(
+          children: [
+            Container(
+              width: width * 0.75,
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black, width: 1.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/Thub.png',
+                    height: 56,
+                    fit: BoxFit.contain,
+                  ),
+                  const SizedBox(height: 12),
+                        
+                  Container(
+                    width: 100,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      border: Border.all(color: Colors.black),
+                      image: DecorationImage(
+                        image: NetworkImage(widget.imageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                        
+                  Text(
+                    widget.studentName.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      letterSpacing: 1.2,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 14),
+                        
+                  // Text(
+                  //   widget.rollNo,
+                  //   style: GoogleFonts.poppins(
+                  //     fontSize: 12,
+                  //     fontWeight: FontWeight.w600,
+                  //     color: Colors.black87,
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 14),
+                        
+                  // Text(
+                  //   widget.tech,
+                  //   style: GoogleFonts.poppins(
+                  //     fontSize: 12,
+                  //     fontWeight: FontWeight.w600,
+                  //     color: Colors.black87,
+                  //   ),
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  // const SizedBox(height: 20),
+                        
+                  _buildBarcode(widget.rollNo),
+                ],
+              ),
+            ),
+                        
+            const SizedBox(height: 20),
+                        
+            OutlinedButton(
+              onPressed: _isSubmitting ? null : markAttendance,
+              style: OutlinedButton.styleFrom(
+                backgroundColor: Colors.white,
+                side: const BorderSide(color: Colors.black, width: 1.5),
+                shape: const RoundedRectangleBorder(),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 122.5,
+                  vertical: 12,
+                ),
+              ),
+              child: Text(
+                "Present",
+                style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+                        
+            const SizedBox(height: 16),
+                        
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                "Close",
+                style: GoogleFonts.poppins(
                   color: Colors.white,
-                  border: Border.all(color: Colors.black, width: 1.5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 10,
-                      offset: const Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/Thub.png',
-                      height: 56,
-                      fit: BoxFit.contain,
-                    ),
-                    const SizedBox(height: 12),
-
-                    Container(
-                      width: 100,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        border: Border.all(color: Colors.black),
-                        image: DecorationImage(
-                          image: NetworkImage(widget.imageUrl),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-
-                    Text(
-                      widget.studentName.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        letterSpacing: 1.2,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 14),
-
-                    Text(
-                      widget.rollNo,
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-
-                    Text(
-                      widget.tech,
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 20),
-
-                    _buildBarcode(widget.rollNo),
-                  ],
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-
-              const SizedBox(height: 20),
-
-              OutlinedButton(
-                onPressed: _isSubmitting ? null : markAttendance,
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  side: const BorderSide(color: Colors.black, width: 1.5),
-                  shape: const RoundedRectangleBorder(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 122.5,
-                    vertical: 12,
-                  ),
-                ),
-                child: Text(
-                  "Present",
-                  style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  "Close",
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

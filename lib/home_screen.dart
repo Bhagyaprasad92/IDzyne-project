@@ -1,3 +1,5 @@
+// Removed few important lines in code for not giving complete implementation
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,15 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _focusNode = FocusNode();
 
-    _rollController.addListener(() {
-      setState(() {});
-    });
+    // _rollController.addListener(() {
+    //   setState(() {});
+    // });
 
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
-        setState(() {});
-      }
-    });
+    // _focusNode.addListener(() {
+    //   if (_focusNode.hasFocus) {
+    //     setState(() {});
+    //   }
+    // });
   }
 
   @override
@@ -120,13 +122,13 @@ class _HomeScreenState extends State<HomeScreen> {
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
           child: IDCardPage(
-            userId: data['_id'],
-            studentName: data['name'],
-            rollNo: data['rollNumber'],
-            imageUrl:
-                "https://info.aec.edu.in/adityacentral/StudentPhotos/${data['rollNumber']}.jpg",
-            tech: data['technologyName'],
-            addedBy: widget.userId,
+            // id: data['_id'],
+            // name: data['name'],
+            // rollNo: data['rollNumber'],
+            // imageUrl:
+            //     "https://info.aec.edu.in/adityacentral/StudentPhotos/${data['rollNumber']}.jpg",
+            // tech: data['technologyName'],
+            // addedBy: widget.userId,
           ),
         );
       },
@@ -201,367 +203,269 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildCurrentPage() {
-    switch (_currentIndex) {
-      case 0:
-        return _buildScannerPage();
-      case 1:
-        return _buildDashboardPage();
-      case 2:
-        return _buildProfilePage();
-      default:
-        return _buildScannerPage();
-    }
-  }
+  // Object _buildCurrentPage() {
+  //   switch (_currentIndex) {
+  //     case 0:
+  //       return _buildScannerPage();
+  //     case 1:
+  //       return _buildDashboardPage();
+  //     case 2:
+  //       return dummy();
+  //     default:
+  //       return _buildScannerPage();
+  //   }
+  // }
 
   Widget _buildScannerPage() {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     return GestureDetector(
-      behavior: HitTestBehavior.translucent,
       onTap: () => FocusScope.of(context).unfocus(),
-      child: RefreshIndicator(
-        onRefresh: _refreshAllData,
-        child: SingleChildScrollView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  spacing: 3,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 50),
-                    Text(
-                      'Hi ${formatName(widget.userName)},',
-                      style: GoogleFonts.poppins(
-                        fontSize: screenWidth * 0.09,
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xff747675),
-                      ),
-                    ),
-                    SizedBox(height: 1),
-                    Text(
-                      'Scan a student ID to',
-                      style: GoogleFonts.poppins(
-                        fontSize: screenWidth * 0.07,
-                        fontWeight: FontWeight.w700,
-                        shadows: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 600,
-                            offset: Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 1),
-                    Text(
-                      'mark attendance!',
-                      style: GoogleFonts.poppins(
-                        fontSize: screenWidth * 0.07,
-                        fontWeight: FontWeight.w700,
-                        shadows: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 600,
-                            offset: Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: screenHeight * 0.04),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            transitionDuration: Duration(milliseconds: 400),
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    const ScannerScreen(),
-                            transitionsBuilder: (
-                              context,
-                              animation,
-                              secondaryAnimation,
-                              child,
-                            ) {
-                              const begin = Offset(0.0, -1.0);
-                              const end = Offset.zero;
-                              const curve = Curves.easeOut;
-        
-                              final tween = Tween(
-                                begin: begin,
-                                end: end,
-                              ).chain(CurveTween(curve: curve));
-        
-                              return SlideTransition(
-                                position: animation.drive(tween),
-                                child: child,
-                              );
-                            },
-                          ),
-                        ).then((barcode) {
-                          if (barcode != null && barcode is String) {
-                            fetchStudentDetails(barcode);
-                          }
-                        });
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: screenHeight * 0.30,
-                        padding: EdgeInsets.all(screenWidth * 0.06),
-                        decoration: BoxDecoration(
-                          color: Colors.white54,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 70,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.document_scanner_outlined,
-                              size: 48,
-                              color: Colors.black54,
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              'Start Scanning',
-                              style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                shadows: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 600,
-                                    offset: Offset(0, 6),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Text(
-                      "Student without an ID? Simply enter their roll number manually.",
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff747675),
-                        shadows: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 600,
-                            offset: Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            focusNode: _focusNode,
-                            autofocus: false,
-                            controller: _rollController,
-                            cursorRadius: Radius.circular(90),
-                            cursorHeight: 18,
-                            cursorColor: Colors.black,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.transparent,
-                              hintText: "Enter roll number ...",
-                              hintStyle: GoogleFonts.poppins(
-                                color: Colors.black54,
-                                fontSize: 12,
-                                shadows: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 60,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 10,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.zero,
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.zero,
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.zero,
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              suffixIcon:
-                                  _rollController.text.isNotEmpty
-                                      ? IconButton(
-                                        iconSize: 18,
-                                        icon: Icon(Icons.clear),
-                                        onPressed: () {
-                                          _rollController.clear();
-                                        },
-                                      )
-                                      : null,
-                            ),
-                            style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontSize: 14,
-                            ),
-                            readOnly: false,
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            color: Colors.black,
-                          ),
-                          height: 48.4,
-                          width: 100,
-                          child: TextButton(
-                            onPressed: () async {
-                              final roll =
-                                  _rollController.text.trim().toUpperCase();
-                              if (roll.isEmpty) return;
-        
-                              FocusScope.of(context).unfocus();
-        
-                              await fetchStudentDetails(roll);
-                            },
-                            child: Text(
-                              "Send",
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+      child: Row(
+        children: [
+          // Removed few important lines in code for not giving complete implementation
+          SizedBox(height: 50),
+          Text(
+            'Hi ${formatName(widget.userName)},',
+            style: GoogleFonts.poppins(
+              fontSize: screenWidth * 0.09,
+              fontWeight: FontWeight.w700,
+              color: const Color(0xff747675),
+            ),
+          ),
+          SizedBox(height: 1),
+          Text(
+            'Scan a student ID to',
+            style: GoogleFonts.poppins(
+              fontSize: screenWidth * 0.07,
+              fontWeight: FontWeight.w700,
+              shadows: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 600,
+                  offset: Offset(0, 6),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 1),
+          Text(
+            'mark attendance!',
+            style: GoogleFonts.poppins(
+              fontSize: screenWidth * 0.07,
+              fontWeight: FontWeight.w700,
+              shadows: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 600,
+                  offset: Offset(0, 6),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: screenHeight * 0.04),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  transitionDuration: Duration(milliseconds: 400),
+                  pageBuilder:
+                      (context, animation, secondaryAnimation) =>
+                          const ScannerScreen(),
+                  transitionsBuilder: (
+                    context,
+                    animation,
+                    secondaryAnimation,
+                    child,
+                  ) {
+                    const begin = Offset(0.0, -1.0);
+                    const end = Offset.zero;
+                    const curve = Curves.easeOut;
+                    
+                    final tween = Tween(
+                      begin: begin,
+                      end: end,
+                    ).chain(CurveTween(curve: curve));
+                    
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: child,
+                    );
+                  },
+                ),
+              ).then((barcode) {
+                if (barcode != null && barcode is String) {
+                  fetchStudentDetails(barcode);
+                }
+              });
+            },
+            child: Container(
+              width: double.infinity,
+              height: screenHeight * 0.30,
+              padding: EdgeInsets.all(screenWidth * 0.06),
+              decoration: BoxDecoration(
+                color: Colors.white54,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 70,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.document_scanner_outlined,
+                    size: 48,
+                    color: Colors.black54,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Start Scanning',
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      shadows: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 600,
+                          offset: Offset(0, 6),
                         ),
                       ],
                     ),
-                  ],
+                  ),
+                  const SizedBox(height: 4),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          Text(
+            "Student without an ID? Simply enter their roll number manually.",
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Color(0xff747675),
+              shadows: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 600,
+                  offset: Offset(0, 6),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  focusNode: _focusNode,
+                  autofocus: false,
+                  controller: _rollController,
+                  cursorRadius: Radius.circular(90),
+                  cursorHeight: 18,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.transparent,
+                    hintText: "Enter roll number ...",
+                    hintStyle: GoogleFonts.poppins(
+                      color: Colors.black54,
+                      fontSize: 12,
+                      shadows: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 60,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 10,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.zero,
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.zero,
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.zero,
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    suffixIcon:
+                        _rollController.text.isNotEmpty
+                            ? IconButton(
+                              iconSize: 18,
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                _rollController.clear();
+                              },
+                            )
+                            : null,
+                  ),
+                  style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontSize: 14,
+                  ),
+                  readOnly: false,
                 ),
               ),
-              if (isLoading) Center(child: CircularProgressIndicator()),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  color: Colors.black,
+                ),
+                height: 48.4,
+                width: 100,
+                child: TextButton(
+                  onPressed: () async {
+                    final roll =
+                        _rollController.text.trim().toUpperCase();
+                    if (roll.isEmpty) return;
+                    
+                    FocusScope.of(context).unfocus();
+                    
+                    await fetchStudentDetails(roll);
+                  },
+                  child: Text(
+                    "Send",
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-        ),
+          if (isLoading) Center(child: CircularProgressIndicator()),
+        ],
       ),
     );
   }
 
-  Widget _buildDashboardPage() {
-    return DepartmentStatsPage(username: widget.userName);
-  }
+  // Widget _buildDashboardPage() {
+  //   return DepartmentStatsPage(username: widget.userName);
+  // }
 
-  Widget _buildProfilePage() {
-    return AttendanceOverviewScreen(userName: widget.userName);
-  }
+  // void _performLogout() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.clear();
 
-  void _showLogoutDialog() {
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
-    final screenHeight = mediaQuery.size.height;
-
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          clipBehavior: Clip.hardEdge,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-          elevation: 2,
-          title: Text(
-            'LOGOUT CONFIRMATION',
-            style: GoogleFonts.poppins(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1,
-              fontSize: screenWidth * 0.055,
-            ),
-          ),
-          content: Text(
-            'Are you sure you want to logout?',
-            style: GoogleFonts.poppins(
-              color: Colors.black,
-              fontSize: screenWidth * 0.04,
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
-              child: Container(
-                width: screenWidth * 0.25,
-                padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth * 0.02,
-                  vertical: screenHeight * 0.015,
-                ),
-                color: Colors.black,
-                alignment: Alignment.center,
-                child: Text(
-                  'CANCEL',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: screenWidth * 0.035,
-                  ),
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(dialogContext);
-                _performLogout();
-              },
-              child: Container(
-                width: screenWidth * 0.25,
-                padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth * 0.02,
-                  vertical: screenHeight * 0.015,
-                ),
-                color: Colors.black,
-                alignment: Alignment.center,
-                child: Text(
-                  'LOGOUT',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: screenWidth * 0.035,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _performLogout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
-    );
-  }
+  //   Navigator.pushReplacement(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const LoginScreen()),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -577,7 +481,82 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
-            _showLogoutDialog();
+            final mediaQuery = MediaQuery.of(context);
+            final screenWidth2 = mediaQuery.size.width;
+            final screenHeight = mediaQuery.size.height;
+            
+            showDialog(
+              context: context,
+              builder: (BuildContext dialogContext) {
+                return AlertDialog(
+                  backgroundColor: Colors.white,
+                  clipBehavior: Clip.hardEdge,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  elevation: 2,
+                  title: Text(
+                    'LOGOUT CONFIRMATION',
+                    style: GoogleFonts.poppins(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                      fontSize: screenWidth2 * 0.055,
+                    ),
+                  ),
+                  content: Text(
+                    'Are you sure you want to logout?',
+                    style: GoogleFonts.poppins(
+                      color: Colors.black,
+                      fontSize: screenWidth2 * 0.04,
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(dialogContext),
+                      child: Container(
+                        width: screenWidth2 * 0.25,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth2 * 0.02,
+                          vertical: screenHeight * 0.015,
+                        ),
+                        color: Colors.black,
+                        alignment: Alignment.center,
+                        child: Text(
+                          'CANCEL',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: screenWidth2 * 0.035,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(dialogContext);
+                        _performLogout();
+                      },
+                      child: Container(
+                        width: screenWidth2 * 0.25,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth2 * 0.02,
+                          vertical: screenHeight * 0.015,
+                        ),
+                        color: Colors.black,
+                        alignment: Alignment.center,
+                        child: Text(
+                          'LOGOUT',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: screenWidth2 * 0.035,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
           },
           icon: Icon(Icons.logout_rounded, size: screenWidth * 0.07),
           color: Colors.black87,
@@ -654,7 +633,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: _buildCurrentPage(),
+      // body: _buildCurrentPage(),
 
       bottomNavigationBar: CustomBottomNavBar(
         activeButton: activeButton,
@@ -664,30 +643,8 @@ class _HomeScreenState extends State<HomeScreen> {
           if (selected == 'profile') {
             Navigator.push(
               context,
-              PageRouteBuilder(
-                transitionDuration: Duration(milliseconds: 400),
-                pageBuilder:
-                    (context, animation, secondaryAnimation) =>
-                        AttendanceOverviewScreen(userName: widget.userName),
-                transitionsBuilder: (
-                  context,
-                  animation,
-                  secondaryAnimation,
-                  child,
-                ) {
-                  const begin = Offset(1.0, 0.0);
-                  const end = Offset.zero;
-                  const curve = Curves.easeOut;
-
-                  final tween = Tween(
-                    begin: begin,
-                    end: end,
-                  ).chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
+              MaterialPageRoute(
+                builder: (context) => dummy(),
               ),
             ).then((_) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -771,6 +728,18 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Widget dummy() {
+    return Center(
+      child: Text("Profile Page"),
+    );
+  }
+}
+
+class _buildDashboardPage {
+}
+
+class _performLogout {
 }
 
 class ScannerScreen extends StatefulWidget {

@@ -1,3 +1,5 @@
+// Removed few important lines in code for not giving complete implementation
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -8,8 +10,7 @@ import 'package:http/http.dart' as http;
 void showBugReportPopup(BuildContext context) {
   final TextEditingController descriptionController = TextEditingController();
   String selectedCategory = 'Bug report';
-  FocusNode dropdownFocusNode =
-      FocusNode(); // Define this outside the build method
+  FocusNode dropdownFocusNode = FocusNode();
 
   List<String> categories = [
     'Bug report',
@@ -33,36 +34,12 @@ void showBugReportPopup(BuildContext context) {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey.shade200,
-                        ),
-                        padding: EdgeInsets.all(8),
-                        child: Icon(Icons.error_outline, color: Colors.black87),
-                      ),
-                      SizedBox(width: 12),
-                      Text(
-                        'Support',
-                        style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Spacer(),
-                      IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.black54,
-                          size: 22,
-                        ),
-                        splashRadius: 20,
-                      ),
-                    ],
+                  // removed some important lines of code for not giving the complete implementation
+                  Spacer(),
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: Icon(Icons.close, color: Colors.black54, size: 22),
+                    splashRadius: 20,
                   ),
                   SizedBox(height: 20),
                   Text(
@@ -70,7 +47,7 @@ void showBugReportPopup(BuildContext context) {
                     style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 6),
-
+                  // Removed few important lines in code for not giving complete implementation
                   DropdownButtonFormField<String>(
                     focusNode: dropdownFocusNode,
                     value: selectedCategory,
@@ -123,21 +100,13 @@ void showBugReportPopup(BuildContext context) {
                     style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 6),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.zero,
-                      border: Border.all(color: Colors.grey.shade400),
+                  TextField(
+                    controller: descriptionController,
+                    maxLines: 5,
+                    decoration: InputDecoration.collapsed(
+                      hintText: 'Describe the issue...',
                     ),
-                    padding: EdgeInsets.all(12),
-                    child: TextField(
-                      controller: descriptionController,
-                      maxLines: 5,
-                      decoration: InputDecoration.collapsed(
-                        hintText: 'Describe the issue...',
-                      ),
-                      style: GoogleFonts.poppins(fontSize: 15),
-                    ),
+                    style: GoogleFonts.poppins(fontSize: 15),
                   ),
 
                   SizedBox(height: 28),
@@ -155,64 +124,16 @@ void showBugReportPopup(BuildContext context) {
                         ),
                       ),
                       SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          final description = descriptionController.text.trim();
-                          if (description.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  "Please enter a bug description.",
-                                  style: GoogleFonts.poppins(fontSize: 15),
-                                ),
-                                backgroundColor: Colors.redAccent,
-                              ),
-                            );
-                            return;
-                          }
-
-                          final success = await submitBugReport(
-                            category: selectedCategory,
-                            description: description,
-                          );
-
-                          Navigator.of(context).pop();
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor:
-                                  Colors.black,
-                              content: Text(
-                                style: GoogleFonts.poppins(
-                                  fontSize: 15,
-                                  color: Colors.white,
-                                ),
-                                success
-                                    ? 'Failed to submit! ❌'
-                                    : 'Thanks for your time! ✅',
-                              ),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black87,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero,
-                          ),
-                          elevation: 0,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 10,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 32,
-                            vertical: 10,
-                          ),
-                          child: Text(
-                            'Submit',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                            ),
+                        child: Text(
+                          'Submit',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -234,8 +155,7 @@ Future<bool> submitBugReport({
 }) async {
   try {
     final url = Uri.parse(
-      'https://script.google.com/macros/s/AKfycbwRgivqMHIGxkaq6UrTnEZ0dmliQSU6pSInRNcHS_KPXIFn-M-IKLdPrsuE0SFGM6Zd/exec',
-    );
+        'https://your-backend-api.com/submit-bug-report');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
