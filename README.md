@@ -40,46 +40,44 @@
 📊 **Admin Dashboard** – analytics for staff <br>
 🔔 **Push Notifications** – real-time updates <br>
 
-<p align="center">
-  <img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif" width="400" />
-</p>
+;; <p align="center">
+;;   <img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif" width="400" />
+;; </p>
 
 ---
 
 ## 🛠️ Tech Stack
 
 - ⚡ **Framework:** Flutter (Dart)  
-- 🔥 **Database:** Firebase (Auth, Firestore)  
-- 🔗 **Backend:** REST APIs *(hidden 🚫)*  
+- 🔥 **Database:** API's  
+- 🔗 **Backend:** REST API's *(hidden 🚫)*  
 
-<p align="center">
-  <img src="https://media.giphy.com/media/RkDZjYxUOn5muRWmgY/giphy.gif" width="250"/>
-</p>
-
----
-
-## 📷 Screenshots / Demo
-
-<p align="center">
-  <img src="https://media.giphy.com/media/QZkpIdieotn3i/giphy.gif" width="220" />
-  <img src="https://media.giphy.com/media/l0HlOvJ7yaacpuSas/giphy.gif" width="220" />
-  <img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" width="220" />
-</p>
+;; <p align="center">
+;;   <img src="https://media.giphy.com/media/RkDZjYxUOn5muRWmgY/giphy.gif" width="250"/>
+;; </p>
 
 ---
+
+;; ## 📷 Screenshots / Demo
+
+;; <p align="center">
+;;   <img src="https://media.giphy.com/media/QZkpIdieotn3i/giphy.gif" width="220" />
+;;   <img src="https://media.giphy.com/media/l0HlOvJ7yaacpuSas/giphy.gif" width="220" />
+;;   <img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" width="220" />
+;; </p>
+
+;; ---
 
 ## 🏗️ Project Setup
 
 Clone repo
-git clone https://github.com/bhagyaprasad92/idzyne.git
+git clone https://github.com/bhagyaprasad92/idzyne-project.git
 
-Install dependencies
+Install dependencies/n
 flutter pub get
 
-Run the app
+Run the app/n
 flutter run
-
-text
 
 <p align="center">
   <img src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif" width="200"/>
