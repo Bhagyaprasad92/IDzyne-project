@@ -45,7 +45,7 @@ With a focus on **usability, reliability, and speed**, IDzyne ensures that insti
 ## 🛠️ Tech Stack
 
 * **Framework:** Flutter (Dart)
-* **Database:** Firebase (Auth, Firestore)
+* **Database:** APIs *(hidden for privacy)*
 * **Backend:** REST APIs *(hidden for privacy)*
 
 ---
