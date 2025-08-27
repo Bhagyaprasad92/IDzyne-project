@@ -78,7 +78,7 @@ Fork → Code → PR ❤️
 ## 📬 Contact
 
 📧 **Email:** [scs150831@gmail.com](mailto:scs150831@gmail.com)  
-🌍 **GitHub:** [Your Profile](https://github.com/your-username)  
+🌍 **GitHub:** [Your Profile](https://github.com/bhagyaprasad92)  
 
 <p align="center">
   <img src="https://media.giphy.com/media/l41lUjUgLLwWrz20w/giphy.gif" width="200" />
